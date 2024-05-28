@@ -70,7 +70,7 @@
   ansible.builtin.user:
     name: "{{ docker_user  }}"
     shell: /bin/bash
-    groups: admins,docker,sudo
+    groups: docker,sudo
     append: yes
   become: true
 
