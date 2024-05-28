@@ -33,7 +33,7 @@
     dest: /etc/apt/keyrings/docker.asc
     force: true
   become: true
-  when: not key_state.state.exists
+  when: not key_state.stat.exists
 
 - name: Встановлюємо права на файл ключа
   ansible.builtin.file:
