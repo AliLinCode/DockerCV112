@@ -44,7 +44,7 @@
 - name:  Конфігуруємо app для збірки
   ansible.builtin.template:
     src: app.py.j2
-    dest: "{{ docker_build_path }}/app.py"
+    dest: "{{ docker_build_path }}/sample_app.py"
     mode: '0755'
     owner: root
     group: docker
