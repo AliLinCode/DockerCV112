@@ -51,8 +51,8 @@
   become: true
 
 - name:  Конфігуруємо template для app 
-  ansible.builtin.template:
-    src: index.html.j2
+  ansible.builtin.copy:
+    src: index.html
     dest: "{{ docker_build_path }}/templates/index.html"
     mode: '0755'
     owner: root
