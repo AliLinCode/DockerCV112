@@ -1,8 +1,8 @@
 ---
-- name: Інсталяція пакета docker в python для ansible
-  ansible.builtin.pip:
-    name: docker
-  become: true
+# - name: Інсталяція пакета docker в python для ansible
+#   ansible.builtin.pip:
+#     name: docker
+#   become: true
 
 - name: Створюємо директорію для нашого проекту
   ansible.builtin.file: 
