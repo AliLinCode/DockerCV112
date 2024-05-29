@@ -1,0 +1,78 @@
+---
+- name: Інсталяція пакета docker в python для ansible
+  ansible.builtin.pip:
+    name: docker
+  become: true
+
+- name: Створюємо директорію для нашого проекту
+  ansible.builtin.file: 
+    path: "{{ docker_build_path }}"
+    state: directory
+    mode: '0755'
+    owner: root
+    group: docker
+  become: true
+
+- name: Створюємо директорію для шаблонів нашого проекту
+  ansible.builtin.file: 
+    path: "{{ docker_build_path }}/templates"
+    state: directory
+    mode: '0755'
+    owner: root
+    group: docker
+  become: true
+
+- name: Створюємо директорію для стилів нашого проекту
+  ansible.builtin.file: 
+    path: "{{ docker_build_path }}/static"
+    state: directory
+    mode: '0755'
+    owner: root
+    group: docker
+  become: true
+
+
+- name:  Конфігуруємо Dockerfile для збірки
+  ansible.builtin.template:
+    src: Dockerfile.j2
+    dest: "{{ docker_build_path }}/Dockerfile"
+    mode: '0755'
+    owner: root
+    group: docker
+  become: true
+
+- name:  Конфігуруємо app для збірки
+  ansible.builtin.template:
+    src: app.py.j2
+    dest: "{{ docker_build_path }}/app.py"
+    mode: '0755'
+    owner: root
+    group: docker
+  become: true
+
+- name:  Конфігуруємо template для app 
+  ansible.builtin.template:
+    src: index.html.j2
+    dest: "{{ docker_build_path }}/templates/index.html"
+    mode: '0755'
+    owner: root
+    group: docker
+  become: true
+
+- name: Копіюємо файл на віддалену машину
+  ansible.builtin.copy: 
+    src: style.css
+    dest: "{{ docker_build_path }}/static/style.css"
+    mode: '0755'
+    owner: root
+    group: docker
+  become: true
+
+- name: Робимо збірку образа
+  community.docker.docker_image:
+    build:
+      path: "{{ docker_build_path }}"
+    name: "{{ image_name }}"
+    tag: "{{ image_tag }}"
+    source: build
+  become: true
