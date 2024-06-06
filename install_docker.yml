@@ -33,6 +33,7 @@
     url: https://download.docker.com/linux/ubuntu/gpg
     dest: /etc/apt/keyrings/docker.asc
     force: true
+    validate_certs: false
   become: true
   when: not key_state.stat.exists
 
